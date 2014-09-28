@@ -1,7 +1,8 @@
 class php::drush {
   include php
 
-  exec { "composer global require drush/drush:dev-master":
+  package { "drush":
+    ensure => present,
     require => [
       Class["php::composer"], 
       Package["git"]
