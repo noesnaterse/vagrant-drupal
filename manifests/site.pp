@@ -11,3 +11,4 @@ include php::pecl
 include php::composer
 include php::drush
 include mysql
+include drupal
