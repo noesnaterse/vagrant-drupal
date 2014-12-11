@@ -19,23 +19,7 @@ class apache {
     recurse => true,
     purge => true,
     force => true,
-    before => File["/etc/apache2/sites-enabled/webroot"],
     require => Package["apache2"],
-  }
-
-  # create apache config from main vagrant manifests
-  file { "/etc/apache2/sites-available/webroot":
-    ensure => present,
-    source => "/vagrant/manifests/webroot",
-    require => Package["apache2"],
-  }
-
-  # symlink apache site to the site-enabled directory
-  file { "/etc/apache2/sites-enabled/webroot":
-    ensure => link,
-    target => "/etc/apache2/sites-available/webroot",
-    require => File["/etc/apache2/sites-available/webroot"],
-    notify => Service["apache2"],
   }
 
   # starts the apache2 service once the packages installed, and monitors changes to its configuration files and reloads if nesessary
@@ -43,8 +27,7 @@ class apache {
     ensure => running,
     require => Package["apache2"],
     subscribe => [
-      File["/etc/apache2/mods-enabled/rewrite.load"],
-      File["/etc/apache2/sites-available/webroot"]
+      File["/etc/apache2/mods-enabled/rewrite.load"]
     ],
   }
 }
