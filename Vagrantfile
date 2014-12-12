@@ -18,14 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.88.88"
 
-  # Enable provisioning with Puppet stand alone.  Puppet manifests
-  # are contained in a directory path relative to this Vagrantfile.
-  # You will need to create the manifests directory and a manifest in
-  # the file default.pp in the manifests_path directory.
-  #
-  config.vm.provision "puppet" do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "site.pp"
-    puppet.module_path = "modules"
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "playbook.yml"
   end
 end
